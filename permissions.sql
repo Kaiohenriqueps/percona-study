@@ -1,3 +1,0 @@
-GRANT SELECT, PROCESS, REPLICATION CLIENT, RELOAD, BACKUP_ADMIN ON *.* TO 'my_user'@'%';
-GRANT SELECT ON performance_schema.* TO 'my_user'@'%';
-FLUSH PRIVILEGES;

@@ -1,24 +1,11 @@
-services:
-  pmm-server:
-    image: percona/pmm-server:latest
-    container_name: pmm-server
-    restart: always
-    ports:
-      - "8080:80"                                # Acesso ao PMM via navegador
-    volumes:
-      - pmm_data:/srv                            # Persistência dos dados do PMM
-
-  mysql:
-    image: mysql:8.0
-    container_name: mysql_container
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: my_database
-      MYSQL_USER: my_user
-      MYSQL_PASSWORD: my_password
-    ports:
-      - "3307:3306"
-volumes:
-  percona_data:
-  pmm_data:
+services:                            
+  mysql:                             
+    image: percona/percona-server:8.0
+    container_name: percona-mysql    
+    environment:                    
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}                              
+      - MYSQL_DATABASE=${MYSQL_DATABASE}                                        
+      - MYSQL_USER=${MYSQL_USER}     
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}                                        
+    ports:                          
+      - "${MYSQL_PORT}:3306"
