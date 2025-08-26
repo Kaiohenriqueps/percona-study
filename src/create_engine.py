@@ -9,19 +9,14 @@ connection = pymysql.connect(
     cursorclass=pymysql.cursors.DictCursor,
 )
 
-with connection:
+batches = [(f"webmaster{i}@python.org", f"very-secret-{i}") for i in range(1, 1000)]
+
+try:
     with connection.cursor() as cursor:
-        # Create a new record
         sql = "INSERT INTO `users` (`email`, `password`) VALUES (%s, %s)"
-        cursor.execute(sql, ("webmaster@python.org", "very-secret"))
-
-    # connection is not autocommit by default. So you must commit to save
-    # your changes.
+        cursor.executemany(sql, batches)
     connection.commit()
-
-    with connection.cursor() as cursor:
-        # Read a single record
-        sql = "SELECT `id`, `password` FROM `users` WHERE `email`=%s"
-        cursor.execute(sql, ("webmaster@python.org",))
-        result = cursor.fetchone()
-        print(result)
+except Exception as e:
+    print(f"An error occurred: {e}")
+finally:
+    connection.close()
