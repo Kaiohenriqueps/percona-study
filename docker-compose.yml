@@ -1,11 +1,12 @@
-services:                            
-  mysql:                             
-    image: percona/percona-server:8.0
-    container_name: percona-mysql    
-    environment:                    
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}                              
-      - MYSQL_DATABASE=${MYSQL_DATABASE}                                        
-      - MYSQL_USER=${MYSQL_USER}     
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}                                        
-    ports:                          
+services:
+  mysql: 
+    build: .
+    platform: linux/amd64
+    container_name: custom-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
       - "${MYSQL_PORT}:3306"
